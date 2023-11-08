@@ -1,11 +1,10 @@
+'use client';
+
 import React from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from '@styles';
 import { isBrowser } from '../utils';
 
-export default function useMediaQuery(
-  queryInput,
-  options = {}
-) {
+export function useMedia(queryInput, options = {}) {
   const theme = useTheme();
   const supportMatchMedia = isBrowser && typeof window.matchMedia !== 'undefined';
 
@@ -13,16 +12,18 @@ export default function useMediaQuery(
     defaultMatches = false,
     matchMedia = supportMatchMedia ? window.matchMedia : null,
     noSsr = false,
-    ssrMatchMedia = null,
+    ssrMatchMedia = null
   } = options;
 
   if (process.env.NODE_ENV !== 'production') {
     if (typeof queryInput === 'function' && theme === null) {
-      console.error([
-        'The `query` argument provided is invalid.',
-        'You are providing a function without a theme in the context.',
-        'One of the parent elements needs to use a ThemeProvider.',
-      ].join('\n'));
+      console.error(
+        [
+          'The `query` argument provided is invalid.',
+          'You are providing a function without a theme in the context.',
+          'One of the parent elements needs to use a ThemeProvider.'
+        ].join('\n')
+      );
     }
   }
 
@@ -56,7 +57,7 @@ export default function useMediaQuery(
         return () => {
           mediaQueryList.removeEventListener('change', notify);
         };
-      },
+      }
     ];
   }, [getDefaultSnapshot, matchMedia, query]);
   const match = React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

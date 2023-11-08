@@ -1,15 +1,12 @@
+'use client';
+
 import React from 'react';
-import Icon from '@components/display/Icon';
+import { Icon } from '@components/media/Icon';
 
 export const createIcon = (displayName) => {
   function Component(props, ref) {
     return (
-      <Icon
-        icon={`${displayName}`}
-        data-testid={`${displayName.replace('Md', '')}Icon`}
-        ref={ref}
-        {...props}
-      ></Icon>
+      <Icon icon={`${displayName}`} data-testid={`${displayName.replace('Md', '')}Icon`} ref={ref} {...props}></Icon>
     );
   }
 

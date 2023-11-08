@@ -1,2 +1,3 @@
-export { default as Container } from "./Container";
-export * from "./Container";
+'use client';
+export { default as Container } from './Container';
+export * from './Container';

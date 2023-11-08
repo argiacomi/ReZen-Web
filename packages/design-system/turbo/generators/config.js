@@ -26,7 +26,7 @@ module.exports = function generator(plop) {
         type: 'add',
         path: 'components/{{path}}/{{pascalCase name}}/index.jsx',
         template:
-          'export { default as {{pascalCase name}} } from "./{{pascalCase name}}";\nexport * from "./{{pascalCase name}}";'
+          '"use client"\nexport { default as {{pascalCase name}} } from "./{{pascalCase name}}";\nexport * from "./{{pascalCase name}}";'
       },
       {
         type: 'add',

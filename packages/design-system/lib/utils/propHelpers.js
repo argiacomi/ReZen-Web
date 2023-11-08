@@ -10,10 +10,7 @@ export function extractEventHandlers(object, excludeKeys = []) {
   const result = {};
 
   Object.keys(object)
-    .filter(
-      (prop) =>
-        prop.match(/^on[A-Z]/) && typeof object[prop] === 'function' && !excludeKeys.includes(prop)
-    )
+    .filter((prop) => prop.match(/^on[A-Z]/) && typeof object[prop] === 'function' && !excludeKeys.includes(prop))
 
     .forEach((prop) => {
       result[prop] = object[prop];
@@ -45,7 +42,7 @@ export function isHostComponent(element) {
 }
 
 export const shouldSpreadAdditionalProps = (Slot) => {
-  return !Slot || !isHostComponent(Slot);
+  return !Slot || !(typeof Slot === 'string');
 };
 
 export function appendOwnerState(elementType, otherProps, ownerState) {
@@ -88,8 +85,7 @@ export function mergeProps(defaultProps, props) {
 }
 
 export function mergeSlotProps(parameters) {
-  const { getSlotProps, additionalProps, externalSlotProps, externalForwardedProps, className } =
-    parameters;
+  const { getSlotProps, additionalProps, externalSlotProps, externalForwardedProps, className } = parameters;
 
   if (!getSlotProps) {
     const joinedClasses = clsx(
@@ -235,4 +231,13 @@ export function deepmerge(target, source, options = { clone: true }) {
   }
 
   return output;
+}
+
+//Returns an object containing transition properties – duration, easing, and delay – from the given input parameters.
+export function getTransitionProps({ timeout, easing, style = {} }, options) {
+  return {
+    duration: style.transitionDuration ?? (typeof timeout === 'number' ? timeout : timeout[options.mode] || 0),
+    easing: style.transitionTimingFunction ?? (typeof easing === 'object' ? easing[options.mode] : easing),
+    delay: style.transitionDelay
+  };
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 //--- Document and Window Utilities ---//
@@ -129,10 +131,7 @@ export function getNormalizedScrollLeft(element, direction) {
 //--- Comparison Utilities ---//
 
 export function areArraysEqual(array1, array2, itemComparer) {
-  return (
-    array1.length === array2.length &&
-    array1.every((value, index) => itemComparer(value, array2[index]))
-  );
+  return array1.length === array2.length && array1.every((value, index) => itemComparer(value, array2[index]));
 }
 
 export function areEqualValues(a, b) {
@@ -152,9 +151,7 @@ export function hasValue(value) {
 
 export function isFilled(obj, SSR = false) {
   return (
-    obj &&
-    ((hasValue(obj.value) && obj.value !== '') ||
-      (SSR && hasValue(obj.defaultValue) && obj.defaultValue !== ''))
+    obj && ((hasValue(obj.value) && obj.value !== '') || (SSR && hasValue(obj.defaultValue) && obj.defaultValue !== ''))
   );
 }
 
@@ -173,4 +170,63 @@ export function capitalize(string) {
   }
 
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+//--- Formatting and Calculation Utilities ---//
+
+// Calculates a duration based on a provided height value (in pixels), useful for transitions involving height changes.
+export function getAutoHeightDuration(timeout, wrapperSize) {
+  if (timeout !== 'auto' || !wrapperSize) {
+    return 0;
+  }
+  return Math.round((4 + 15 * (wrapperSize / 36) ** 0.25 + wrapperSize / 36 / 5) * 10);
+}
+
+function easeInOutSin(time) {
+  return (1 + Math.sin(Math.PI * time - Math.PI / 2)) / 2;
+}
+
+//--- Animation Execution Utilities  ---//
+
+export function animate(property, element, to, options = {}, cb = () => {}) {
+  const { ease = easeInOutSin, duration = 300 } = options;
+
+  let start = null;
+  const from = element[property];
+  let cancelled = false;
+
+  const cancel = () => {
+    cancelled = true;
+  };
+
+  const step = (timestamp) => {
+    if (cancelled) {
+      cb(new Error('Animation cancelled'));
+      return;
+    }
+
+    if (start === null) {
+      start = timestamp;
+    }
+    const time = Math.min(1, (timestamp - start) / duration);
+
+    element[property] = ease(time) * (to - from) + from;
+
+    if (time >= 1) {
+      requestAnimationFrame(() => {
+        cb(null);
+      });
+      return;
+    }
+
+    requestAnimationFrame(step);
+  };
+
+  if (from === to) {
+    cb(new Error('Element already at target position'));
+    return cancel;
+  }
+
+  requestAnimationFrame(step);
+  return cancel;
 }

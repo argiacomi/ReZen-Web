@@ -28,9 +28,6 @@ module.exports = {
     'import/no-duplicates': 'error',
     'prettier/prettier': 'error',
     'react/prop-types': 'off',
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
   }
 };
