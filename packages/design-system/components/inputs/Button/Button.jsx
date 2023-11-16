@@ -76,7 +76,7 @@ const variantStyles = (theme, ownerState) =>
           auto: [5, 16]
         }[ownerState.size]
       ),
-      '&:hover': { backgroundColor: theme.colors.alpha.add(theme.colors[ownerState.color]?.body, 0.2) },
+      '&:hover': { backgroundColor: theme.colors.alpha.add(theme.colors[ownerState.color]?.body, 0.08) },
       [`&.${buttonClasses.disabled}`]: {
         color: theme.colors.disabled.text,
         borderColor: theme.colors.disabled.body

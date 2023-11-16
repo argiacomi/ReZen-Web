@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import styled, { AppBar, Avatar, Box, Icon, IconButton, Stack, Toolbar } from 'design-system';
 import ThemeToggle from './ThemeToggle';
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import styled, { extractStyling } from '@styles';
 import { useSlotProps } from '@hooks';
-import ListContext from '../ListContext';
+import { useListContext } from '../ListContext';
 
 const listItemSecondaryActionClasses = {
   root: 'ListItemSecondaryAction-Root',
@@ -28,7 +28,7 @@ const ListItemSecondaryAction = React.forwardRef((props, ref) => {
   const { component: componentProp = 'div', slots = {}, slotProps = {}, ...otherProps } = props;
 
   const { cssStyles, other } = extractStyling(otherProps);
-  const context = React.useContext(ListContext);
+  const context = useListContext();
   const ownerState = { ...props, cssStyles, disableGutters: context.disableGutters };
 
   const classes = {

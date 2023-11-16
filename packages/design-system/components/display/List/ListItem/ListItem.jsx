@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import styled, { extractStyling } from '@styles';
 import { useEnhancedEffect, useForkRef, useSlotProps } from '@hooks';
 import { ButtonBase } from '@components/inputs/ButtonBase';
-import ListContext from '../ListContext';
+import ListContext, { useListContext } from '../ListContext';
 import { listItemButtonClasses } from '../ListItemButton';
 import { ListItemSecondaryAction } from '../ListItemSecondaryAction';
 
@@ -125,7 +125,7 @@ const ListItem = React.forwardRef((props, ref) => {
   const listItemRef = React.useRef(null);
   const handleRef = useForkRef(listItemRef, ref);
 
-  const context = React.useContext(ListContext);
+  const context = useListContext();
   const childContext = React.useMemo(
     () => ({
       dense: dense || context.dense || false,
@@ -198,12 +198,12 @@ const ListItem = React.forwardRef((props, ref) => {
   }
 
   return (
-    <ListContext.Provider value={childContext}>
+    <ListContext value={childContext}>
       <RootComponent as={Component} {...listItemRootProps}>
         {children}
         {secondaryAction && <ListItemSecondaryAction>{secondaryAction}</ListItemSecondaryAction>}
       </RootComponent>
-    </ListContext.Provider>
+    </ListContext>
   );
 });
 ListItem.displayName = 'ListItem';

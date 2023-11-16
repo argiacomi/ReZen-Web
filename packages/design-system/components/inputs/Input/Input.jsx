@@ -50,7 +50,7 @@ const InputRoot = styled(InputBaseRoot, {
         }
       },
       '&::before': {
-        borderBottom: '1px solid rgba(0 0 0 0.42)',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.42)',
         left: 0,
         bottom: 0,
         content: '"\\00a0"',
@@ -64,7 +64,7 @@ const InputRoot = styled(InputBaseRoot, {
       [`&:hover:not(.${inputClasses.disabled}, .${inputClasses.error}):before`]: {
         borderBottom: `2px solid ${theme.colors.text.primary}`,
         '@media (hover: none)': {
-          borderBottom: '1px solid rgba(0 0 0 0.42)'
+          borderBottom: '1px solid rgba(0, 0, 0, 0.42)'
         }
       },
       [`&.${inputClasses.disabled}:before`]: {

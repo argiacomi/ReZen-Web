@@ -3,7 +3,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import styled, { extractStyling } from '@styles';
-import { BasePopper } from '../BasePopper';
+import { BasePopper } from './BasePopper';
 
 export const popperClasses = {
   root: 'Popper-Root'

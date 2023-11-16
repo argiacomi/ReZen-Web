@@ -14,7 +14,7 @@ const variantComponent = {
   outlined: OutlinedInput
 };
 
-const TextFieldRoot = styled(FormControl)(({ ownerState }) => ownerState.cssStyles);
+const TextFieldRoot = styled(FormControl)({});
 
 const TextField = React.forwardRef((props, ref) => {
   const {
@@ -48,15 +48,12 @@ const TextField = React.forwardRef((props, ref) => {
     type,
     value,
     variant = 'outlined',
-    ...otherProps
+    ...other
   } = props;
-
-  const { cssStyles } = extractStyling(otherProps);
 
   const ownerState = {
     ...props,
     autoFocus,
-    cssStyles,
     color,
     disabled,
     error,
@@ -132,7 +129,7 @@ const TextField = React.forwardRef((props, ref) => {
       color={color}
       variant={variant}
       ownerState={ownerState}
-      {...otherProps}
+      {...other}
     >
       {label != null && label !== '' && (
         <InputLabel htmlFor={id} id={inputLabelId} {...slotProps.inputLabel}>

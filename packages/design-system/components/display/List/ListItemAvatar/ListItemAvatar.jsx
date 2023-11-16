@@ -3,7 +3,7 @@
 import React from 'react';
 import styled, { extractStyling } from '@styles';
 import { useSlotProps } from '@hooks';
-import ListContext from '../ListContext';
+import { useListContext } from '../ListContext';
 
 export const listItemAvatarClasses = {
   root: 'ListItemAvatar-Root',
@@ -27,7 +27,7 @@ const ListItemAvatar = React.forwardRef((props, ref) => {
 
   const { cssStyles, other } = extractStyling(otherProps);
 
-  const context = React.useContext(ListContext);
+  const context = useListContext();
   const ownerState = { ...props, alignItems: context.alignItems, cssStyles };
 
   const classes = {

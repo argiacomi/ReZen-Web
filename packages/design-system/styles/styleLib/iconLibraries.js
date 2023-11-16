@@ -1,5 +1,6 @@
 import * as Fa5Icons from 'react-icons/fa';
 import * as Fa6Icons from 'react-icons/fa6';
+import * as FlatColorIcons from 'react-icons/fc';
 import * as FiIcons from 'react-icons/fi';
 import * as Io4Icons from 'react-icons/io';
 import * as Io5Icons from 'react-icons/io5';
@@ -8,8 +9,10 @@ import * as MdIcons from 'react-icons/md';
 const iconLibraries = (iconProp) => {
   let libraries = [];
 
-  if (iconProp.startsWith('FA')) {
+  if (iconProp.startsWith('Fa')) {
     libraries = [Fa5Icons, Fa6Icons];
+  } else if (iconProp.startsWith('Fc')) {
+    libraries = [FlatColorIcons];
   } else if (iconProp.startsWith('Fi')) {
     libraries = [FiIcons];
   } else if (iconProp.startsWith('Io')) {

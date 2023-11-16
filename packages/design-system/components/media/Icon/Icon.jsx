@@ -53,7 +53,6 @@ const IconRoot = styled('span')(({ theme, ownerState }) => {
 const Icon = React.forwardRef((props, ref) => {
   const {
     children,
-    color = 'inherit',
     size = 'medium',
     htmlColor,
     icon: iconProp,
@@ -77,7 +76,7 @@ const Icon = React.forwardRef((props, ref) => {
   const ownerState = {
     ...props,
     cssStyles,
-    color,
+    color: otherProps.color,
     isSvgElement,
     size
   };

@@ -95,22 +95,32 @@ const createThemeColors = (colors) => {
     tonalOffset: 0.2,
     primary: {
       light: {
-        body: '#412dee',
-        text: colors.white
+        body: '#615cff',
+        text: colors.white,
+        50: '#eae9ff',
+        100: '#cbc7ff',
+        200: '#a6a2ff',
+        300: '#7f7dff',
+        400: '#615cff',
+        500: '#4538fa',
+        600: '#412dee',
+        700: '#381de1',
+        800: '#3001d6',
+        900: '#2a00bd'
       },
       dark: {
-        body: 'rgb(26, 188, 254)'
-      },
-      50: '#eae9ff',
-      100: '#cbc7ff',
-      200: '#a6a2ff',
-      300: '#7f7dff',
-      400: '#615cff',
-      500: '#4538fa',
-      600: '#412dee',
-      700: '#381de1',
-      800: '#3001d6',
-      900: '#2a00bd'
+        body: '#1abef5',
+        50: '#def4fd',
+        100: '#abe3fa',
+        200: '#70d1f8',
+        300: '#1abef5',
+        400: '#00b1f5',
+        500: '#00a3f3',
+        600: '#0095e4',
+        700: '#0082d1',
+        800: '#0071bd',
+        900: '#00519b'
+      }
     },
     secondary: {
       light: {

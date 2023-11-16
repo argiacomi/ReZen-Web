@@ -3,7 +3,7 @@
 import React from 'react';
 import styled, { extractStyling } from '@styles';
 import { useSlotProps } from '@hooks';
-import ListContext from '../ListContext';
+import { useListContext } from '../ListContext';
 
 export const listItemIconClasses = {
   root: 'ListItemIcon-Root',
@@ -29,7 +29,7 @@ const ListItemIcon = React.forwardRef((props, ref) => {
 
   const { cssStyles, other } = extractStyling(otherProps);
 
-  const context = React.useContext(ListContext);
+  const context = useListContext();
   const ownerState = { ...props, cssStyles, alignItems: context.alignItems };
 
   const classes = {

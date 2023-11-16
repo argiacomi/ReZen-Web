@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import styled, { extractStyling, shouldForwardProp } from '@styles';
 import { useEnhancedEffect, useForkRef, useSlotProps } from '@hooks';
 import { ButtonBase } from '@components/inputs/ButtonBase';
-import ListContext from '../ListContext';
+import ListContext, { useListContext } from '../ListContext';
 
 export const listItemButtonClasses = {
   root: 'ListItemButton-Root',
@@ -83,12 +83,15 @@ const ListItemButton = React.forwardRef((props, ref) => {
     alignItems = 'center',
     autoFocus = false,
     component = 'div',
-    children,
+    children: childrenProp,
     dense = false,
     disableGutters = false,
     divider = false,
     focusVisibleClassName,
-    selected = false,
+    onChange,
+    onClick,
+    selected,
+    value,
     ...otherProps
   } = props;
 
@@ -97,7 +100,7 @@ const ListItemButton = React.forwardRef((props, ref) => {
   const listItemRef = React.useRef(null);
   const handleRef = useForkRef(listItemRef, ref);
 
-  const context = React.useContext(ListContext);
+  const context = useListContext();
   const childContext = React.useMemo(
     () => ({
       dense: dense || context.dense || false,
@@ -116,6 +119,18 @@ const ListItemButton = React.forwardRef((props, ref) => {
       }
     }
   }, [autoFocus]);
+
+  const children = React.Children.toArray(childrenProp);
+
+  const handleClick = (event) => {
+    if (!selected && onChange) {
+      onChange(event, value);
+    }
+
+    if (onClick) {
+      onClick(event);
+    }
+  };
 
   const ownerState = {
     ...props,
@@ -147,16 +162,18 @@ const ListItemButton = React.forwardRef((props, ref) => {
       disabled: ownerState.disabled,
       focusVisibleClassName: clsx(classes.focusVisible, focusVisibleClassName),
       href: other.href || other.to,
-      ref: handleRef
+      onClick: handleClick,
+      ref: handleRef,
+      tabIndex: selected ? 0 : -1
     },
     ownerState,
     className: classes.root
   });
 
   return (
-    <ListContext.Provider value={childContext}>
+    <ListContext value={childContext}>
       <ListItemButtonRoot {...listItemButtonRootProps}>{children}</ListItemButtonRoot>
-    </ListContext.Provider>
+    </ListContext>
   );
 });
 

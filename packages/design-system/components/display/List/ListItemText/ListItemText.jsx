@@ -4,7 +4,7 @@ import React from 'react';
 import styled, { extractStyling } from '@styles';
 import { useSlotProps } from '@hooks';
 import { Text } from '@components/typography/Text';
-import ListContext from '../ListContext';
+import { useListContext } from '../ListContext';
 
 export const listItemTextClasses = {
   root: 'ListItemText-Root',
@@ -49,7 +49,7 @@ const ListItemText = React.forwardRef((props, ref) => {
 
   const { cssStyles, other } = extractStyling(otherProps);
 
-  const { dense } = React.useContext(ListContext);
+  const context = useListContext();
 
   let primary = primaryProp != null ? primaryProp : children;
   let secondary = secondaryProp;
@@ -61,13 +61,13 @@ const ListItemText = React.forwardRef((props, ref) => {
     inset,
     primary: !!primary,
     secondary: !!secondary,
-    dense
+    dense: context.dense
   };
 
   if (primary != null && primary.type !== Text && !disableText) {
     primary = (
       <Text
-        variant={dense ? 'body2' : 'body1'}
+        variant={context.dense ? 'body2' : 'body1'}
         className={listItemTextClasses.primary}
         color='text.primary'
         component={primaryTextProps?.variant ? undefined : 'span'}

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import styled, {
   Box,
   Divider,
@@ -6,6 +6,7 @@ import styled, {
   Icon,
   IconButton,
   List,
+  ListContext,
   ListItem,
   ListItemButton,
   ListItemIcon,
@@ -64,59 +65,35 @@ const list = [
 ];
 
 export default function MiniDrawer({ open, handleDrawer, ...other }) {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <StyledDrawer variant='permanent' open={open}>
-      <Box mt='56px' overflow='auto' py='12px' px={open ? '14px' : 1}>
-        <List disablePadding component='nav'>
-          {list.map((item, index) => (
-            <ListItemButton sx={{ p: 0 }} key={item.text} value={index}>
+      <ListContext value={value}>
+        <Box mt='56px' overflow='auto' py='12px' px={open ? '14px' : 1}>
+          <List disablePadding component='nav' onChange={handleChange}>
+            {list.map((item, index) => (
+              <ListItemButton sx={{ borderRadius: '10px', p: '0px' }} key={item.text} value={index}>
+                <ListItemIcon color='monochrome' sx={{ ml: open ? 0 : '6px', minWidth: 0, p: 1 }}>
+                  <Icon icon={item.icon} size={28} />
+                </ListItemIcon>
+                <ListItemText display={open ? null : 'none'} primary={item.text} />
+              </ListItemButton>
+            ))}
+            <Divider display={open ? null : 'none'} my='.75rem' />
+            <ListItemButton sx={{ borderRadius: '10px', p: '0px' }} value={list.length}>
               <ListItemIcon color='monochrome' sx={{ ml: open ? 0 : '6px', minWidth: 0, p: 1 }}>
-                <Icon icon={item.icon} size={28} />
-              </ListItemIcon>
-              <ListItemText display={open ? null : 'none'} primary={item.text} />
-            </ListItemButton>
-          ))}
-          <Divider display={open ? null : 'none'} my='.75rem' />
-          <ListItemButton sx={{ p: 0 }}>
-            <ListItemIcon color='monochrome' sx={{ ml: open ? 0 : '6px', minWidth: 0, p: 1 }}>
-              <Icon icon='MdOutlinePayment' size={28} />
-            </ListItemIcon>
-            <ListItemText display={open ? null : 'none'} primary='Billing' />
-          </ListItemButton>
-        </List>
-      </Box>
-    </StyledDrawer>
-  );
-}
-
-{
-  /* <Divider display={open ? null : 'none'} my='.75rem' />
-          <ListItem
-            disablePadding
-            sx={{
-              borderRadius: '10px',
-              width: 'calc(100% - 12px)',
-              height: '40px',
-              '& .ListItemButton-Root': {
-                borderRadius: '10px',
-                width: 'calc(100% - 12px)',
-                height: '40px',
-                py: 0,
-                px: '12px'
-              }
-            }}
-          >
-            <ListItemButton disableGutters>
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: 3,
-                  color: 'monochrome.body'
-                }}
-              >
                 <Icon icon='MdOutlinePayment' size={28} />
               </ListItemIcon>
               <ListItemText display={open ? null : 'none'} primary='Billing' />
             </ListItemButton>
-          </ListItem> */
+          </List>
+        </Box>
+      </ListContext>
+    </StyledDrawer>
+  );
 }

@@ -3,7 +3,7 @@
 import React from 'react';
 import styled, { extractStyling } from '@styles';
 import { useSlotProps } from '@hooks';
-import { Paper } from '@components/surfaces';
+import { Paper } from '@components/surfaces/Paper';
 import PopperArrow from './PopperArrow';
 
 const PopperContentRoot = styled(Paper)(({ theme, ownerState }) => ({
